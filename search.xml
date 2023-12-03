@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Canu使用教程</title>
+    <url>/2023/11/23/Canu%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="Canu"><a href="#Canu" class="headerlink" title="Canu"></a>Canu</h1><p>用于组装PacBio和Nanopore两家公司得到的测序结果</p>
+<span id="more"></span>
+<h2 id="1-canu的使用"><a href="#1-canu的使用" class="headerlink" title="1.canu的使用"></a>1.canu的使用</h2><h3 id="1-参考语法"><a href="#1-参考语法" class="headerlink" title="(1) 参考语法"></a>(1) 参考语法</h3><pre><code>canu -p a -d test -pacbio pacbio.fasta genomeSize=5m
+</code></pre>
+<h3 id="2-参数解释"><a href="#2-参数解释" class="headerlink" title="(2) 参数解释"></a>(2) 参数解释</h3><pre><code>-p 输出文件前缀
+-d 输出目录名
+-pacbio 需要组装的文件的测序类型
+genomeSize 基因组大小的估计值
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件使用</category>
+        <category>组装</category>
+      </categories>
+      <tags>
+        <tag>生物信息学软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HiFiasm使用教程</title>
+    <url>/2023/11/23/HiFiasm%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="HiFiasm"><a href="#HiFiasm" class="headerlink" title="HiFiasm"></a>HiFiasm</h1><span id="more"></span>
+<h2 id="1-HiFiasm的使用"><a href="#1-HiFiasm的使用" class="headerlink" title="1.HiFiasm的使用"></a>1.HiFiasm的使用</h2><h3 id="1-参考语法"><a href="#1-参考语法" class="headerlink" title="(1) 参考语法"></a>(1) 参考语法</h3><pre><code>HiFiasm -o a -t 32 test.fasta
+</code></pre>
+<h3 id="2-参数解释"><a href="#2-参数解释" class="headerlink" title="(2) 参数解释"></a>(2) 参数解释</h3><pre><code>-o 输出文件前缀
+-t 使用进程数
+</code></pre>
+<h3 id="3-gfa转化为fa"><a href="#3-gfa转化为fa" class="headerlink" title="(3) gfa转化为fa"></a>(3) gfa转化为fa</h3><pre><code>hifiasm生成GFA格式，需要转化为fasta格式
+ awk &#39;/^S/&#123;print &quot;&gt;&quot;$2;print $3&#125;&#39; test.p_ctg.gfa &gt; test.p_ctg.fa
+</code></pre>
+<h2 id="2-结果解读"><a href="#2-结果解读" class="headerlink" title="2.结果解读"></a>2.结果解读</h2><pre><code>.p_ctg.gfa：primary contigs的组装
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件使用</category>
+        <category>组装</category>
+      </categories>
+      <tags>
+        <tag>生物信息学软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>blast使用教程</title>
+    <url>/2023/11/23/blast%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="blast"><a href="#blast" class="headerlink" title="blast"></a>blast</h1><p>用于比对</p>
+<span id="more"></span>
+<h2 id="1-分类"><a href="#1-分类" class="headerlink" title="1.分类"></a>1.分类</h2><p>blastn：将核苷酸序列比对至核苷酸数据库。<br>blastp：将氨基酸序列比对至氨基酸数据库。<br>blastx：将核苷酸序列比对至氨基酸数据库。</p>
+<h2 id="2-blast的使用"><a href="#2-blast的使用" class="headerlink" title="2.blast的使用"></a>2.blast的使用</h2><h3 id="1-创建数据库"><a href="#1-创建数据库" class="headerlink" title="(1) 创建数据库"></a>(1) 创建数据库</h3><pre><code>makeblastdb -in genome.fasta -dbtype nucl -out database_name
+</code></pre>
+<h3 id="2-参数解释"><a href="#2-参数解释" class="headerlink" title="(2) 参数解释"></a>(2) 参数解释</h3><pre><code>-in：构建数据库所用的序列文件
+-dbtype：数据库类型,核苷酸数据库为nucl，氨基酸数据库为prot
+-out：数据库名称
+</code></pre>
+<h3 id="3-比对"><a href="#3-比对" class="headerlink" title="(3) 比对"></a>(3) 比对</h3><pre><code>blast -query test.fasta -db testdatabase -out out.txt -outfmt 6 -evalue 0.00001 -num_threads 10
+</code></pre>
+<h3 id="4-参数解释"><a href="#4-参数解释" class="headerlink" title="(4) 参数解释"></a>(4) 参数解释</h3><pre><code>-query input_file 	所要比对的文件
+-db database_name 	所比对的数据库
+-out output_file 	内容输出到该文件
+-outfmt format		按照不同模式输出，一般设置为6
+-evalue evalue		限制e值，不大于所选数值
+-num_threads：		使用线程数
+</code></pre>
+]]></content>
+      <categories>
+        <category>软件使用</category>
+        <category>比对</category>
+      </categories>
+      <tags>
+        <tag>生物信息学软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hmms_clean</title>
+    <url>/2023/11/25/hmms-clean/</url>
+    <content><![CDATA[<p>用于获取结构域内以半胱氨酸为标记</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">domalist = []</span><br><span class="line"></span><br><span class="line"><span class="built_in">id</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">seq = <span class="string">&quot;&quot;</span></span><br><span class="line">domain = <span class="string">&quot;&quot;</span></span><br><span class="line">file = sys.argv[<span class="number">1</span>]</span><br><span class="line">file2 = sys.argv[<span class="number">2</span>]</span><br><span class="line">infile = <span class="built_in">open</span>(file,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> infile:</span><br><span class="line">	tmp = line.replace(<span class="string">&#x27;\n&#x27;</span>,<span class="string">&#x27;&#x27;</span>).split()</span><br><span class="line">	<span class="built_in">id</span> = tmp[<span class="number">0</span>]</span><br><span class="line">	seq = tmp[<span class="number">1</span>].replace(<span class="string">&#x27;-&#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">	domadict = &#123;&#125;</span><br><span class="line">	domadict[<span class="built_in">id</span>] = seq</span><br><span class="line">	domalist.append(domadict)</span><br><span class="line"><span class="comment">#print(domalist)</span></span><br><span class="line"></span><br><span class="line">infile.close()</span><br><span class="line">outfile = <span class="built_in">open</span>(file2,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">newlist = []</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">dict</span> <span class="keyword">in</span> domalist:</span><br><span class="line">	<span class="keyword">for</span> i,j <span class="keyword">in</span> <span class="built_in">dict</span>.items():</span><br><span class="line">		<span class="comment">#print(i,j)</span></span><br><span class="line">		elem = re.findall(<span class="string">r&#x27;C|[^C]+&#x27;</span>,j)</span><br><span class="line"><span class="comment">#		print(elem)</span></span><br><span class="line">		newlist = []</span><br><span class="line">		<span class="keyword">for</span> x <span class="keyword">in</span> elem:</span><br><span class="line">			<span class="keyword">if</span> x == <span class="string">&quot;C&quot;</span>:</span><br><span class="line">				newlist.append(x)</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				x = (<span class="string">f&quot;X[<span class="subst">&#123;<span class="built_in">len</span>(x)&#125;</span>]&quot;</span>)</span><br><span class="line">				newlist.append(x)</span><br><span class="line"><span class="comment">#				if newlist[0] != &quot;C&quot;:</span></span><br><span class="line"><span class="comment">#					newlist = newlist[1:]</span></span><br><span class="line">				domain = <span class="string">&quot;&quot;</span>.join(newlist)			</span><br><span class="line">		outfile.write(<span class="string">f&quot;<span class="subst">&#123;domain&#125;</span>\n&quot;</span>)</span><br><span class="line">		<span class="built_in">print</span>(domain)</span><br><span class="line">outfile.close()</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>脚本编写</category>
+      </categories>
+      <tags>
+        <tag>脚本</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mummer使用教程</title>
+    <url>/2023/11/24/mummer%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="mummer"><a href="#mummer" class="headerlink" title="mummer"></a>mummer</h1><span id="more"></span>
+<h2 id="1-nucmer"><a href="#1-nucmer" class="headerlink" title="1.nucmer"></a>1.nucmer</h2><p>用于对两个基因组组装进行比较</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nucmer -c 200 -g 200 ref.fa query.fa</span><br></pre></td></tr></table></figure>
+<h2 id="2-delta-filter"><a href="#2-delta-filter" class="headerlink" title="2.delta-filter"></a>2.delta-filter</h2><p>用于过滤噪声</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">delta-filter -i 90 -l 2000 -m out.delta &gt; out.filter</span><br></pre></td></tr></table></figure>
+<h2 id="3-mummerplot"><a href="#3-mummerplot" class="headerlink" title="3.mummerplot"></a>3.mummerplot</h2><p>用于将nucmer得到的数据可视化</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mummerplot --png -p test_plot out.filter</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>软件使用</category>
+        <category>比对</category>
+      </categories>
+      <tags>
+        <tag>生物信息学软件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>初步评估组装质量</title>
+    <url>/2023/11/23/%E5%88%9D%E6%AD%A5%E8%AF%84%E4%BC%B0%E7%BB%84%E8%A3%85%E8%B4%A8%E9%87%8F/</url>
+    <content><![CDATA[<p>用于计算组装后的N50；L50；序列数；总长度等</p>
+<span id="more"></span>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">seq = <span class="string">&quot;&quot;</span></span><br><span class="line">lenlist = []</span><br><span class="line">infasta = sys.argv[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(infasta,<span class="string">&#x27;r&#x27;</span>)<span class="keyword">as</span> file:</span><br><span class="line">	<span class="keyword">for</span> line <span class="keyword">in</span> file:</span><br><span class="line">		tmp = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> tmp[<span class="number">0</span>] == <span class="string">&quot;&gt;&quot;</span>:</span><br><span class="line">			<span class="keyword">if</span> seq != <span class="string">&quot;&quot;</span>:</span><br><span class="line">				lenlist.append(<span class="built_in">len</span>(seq))</span><br><span class="line">			seq = <span class="string">&quot;&quot;</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			seq += tmp</span><br><span class="line">	lenlist.append(<span class="built_in">len</span>(seq))</span><br><span class="line">lenmax = <span class="built_in">max</span>(lenlist)</span><br><span class="line">lenmin = <span class="built_in">min</span>(lenlist)</span><br><span class="line">n50 = <span class="number">0</span></span><br><span class="line">l50 = <span class="number">0</span></span><br><span class="line">totallen = <span class="built_in">sum</span>(lenlist)</span><br><span class="line">length = <span class="number">0</span></span><br><span class="line">ind = <span class="number">0</span></span><br><span class="line">lenlist.sort(reverse=<span class="literal">True</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> lenlist:</span><br><span class="line">	length += i</span><br><span class="line">	ind += <span class="number">1</span></span><br><span class="line">	<span class="keyword">if</span> length &gt;= totallen / <span class="number">2</span>:</span><br><span class="line">		n50 = i</span><br><span class="line">		l50 = ind</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">f&quot;N50 = <span class="subst">&#123;n50&#125;</span>&quot;</span>)	</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">f&quot;L50 = <span class="subst">&#123;l50&#125;</span>&quot;</span>)</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">			</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;max = <span class="subst">&#123;lenmax&#125;</span>&quot;</span>)			</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;min = <span class="subst">&#123;lenmin&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;seqnum = <span class="subst">&#123;<span class="built_in">len</span>(lenlist)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;totallen = <span class="subst">&#123;totallen&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>脚本编写</category>
+        <category>组装</category>
+      </categories>
+      <tags>
+        <tag>脚本</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>环境变量</title>
+    <url>/2023/12/01/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+</search>
